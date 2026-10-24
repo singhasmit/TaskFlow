@@ -1,3 +1,4 @@
+
 name: Verify TaskFlow
 
 on:
@@ -7,16 +8,17 @@ on:
 jobs:
   verify:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: taskflow/package-lock.json
+
       - run: npm ci
-        working-directory: taskflow
+
       - run: npm test
-        working-directory: taskflow
+
       - run: npm run build
-        working-directory: taskflow
