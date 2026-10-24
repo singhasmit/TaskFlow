@@ -109,11 +109,3 @@ The platform guidance below was checked on October 22, 2026. Do not host the wor
 - This project has no multi-region failover, distributed tracing, or production alerting.
 - BullMQ guarantees at-least-once execution, so every real side effect must be designed to tolerate repeats.
 
-## Interview prompts
-
-- Why use Redis/BullMQ instead of a database table and a cron loop?
-- What happens when MongoDB writes successfully but Redis is down?
-- Why does retry require idempotent worker code?
-- How does lower numeric BullMQ priority affect scheduling?
-- Why must the API and worker be independently deployable?
-# TaskFlow

@@ -1,0 +1,35 @@
+services:
+  mongo:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+  api:
+    build: ./server
+    ports:
+      - "4000:4000"
+    env_file: .env
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/taskflow
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      - mongo
+      - redis
+  worker:
+    build: ./server
+    command: npm run worker
+    env_file: .env
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/taskflow
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      - mongo
+      - redis
+volumes:
+  mongo_data:
